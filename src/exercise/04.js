@@ -1,14 +1,16 @@
 // useState: tic tac toe
 // http://localhost:3000/isolated/exercise/04.js
 
-import * as React from 'react'
+import * as React from 'react';
+import { useLocalStorageState } from '../utils';
 
 function Board() {
   const LOCAL_STORAGE_KEY = 'squares';
+  const [squares, setSquares] = useLocalStorageState(
+    LOCAL_STORAGE_KEY,
+    Array(9).fill(null)
+  );
   // 🐨 squares is the state for this component. Add useState for squares
-  const [squares, setSquares] = React.useState(() => {
-    return JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || Array(9).fill(null);
-  });
 
   // 🐨 We'll need the following bits of derived state:
   // - nextValue ('X' or 'O')
@@ -55,10 +57,6 @@ function Board() {
       </button>
     )
   }
-
-  React.useEffect(() => {
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(squares));
-  }, [squares]);
 
   return (
     <div>
